@@ -1,9 +1,9 @@
 /* global THREE */
 
-import Scene from './klase/Scene'
-import Sea from './klase/Sea'
-import Sky from './klase/Sky'
-import AirPlane from './klase/AirPlane'
+import Scene from './actors/Scene'
+import Sea from './actors/Sea'
+import Sky from './actors/Sky'
+import AirPlane from './actors/AirPlane'
 import handleWindowResize from './helpers/handleWindowResize'
 
 const mousePos = {x: 0, y: 0}

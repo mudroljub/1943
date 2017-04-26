@@ -1,6 +1,6 @@
 /* global THREE */
 
-import Colors from '../konfig/colors.js'
+import Colors from '../config/colors.js'
 
 const Sea = function() {
   const geom = new THREE.CylinderGeometry(600, 600, 800, 40, 10)

@@ -1,5 +1,5 @@
 /* global THREE */
-import Colors from '../konfig/colors.js'
+import Colors from '../config/colors.js'
 
 const geom = new THREE.BoxGeometry(20, 20, 20)
 const material = new THREE.MeshPhongMaterial({color: Colors.white})

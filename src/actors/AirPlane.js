@@ -1,5 +1,5 @@
 /* global THREE */
-import Colors from '../konfig/colors.js'
+import Colors from '../config/colors.js'
 import normalize from '../helpers/normalize'
 import Pilot from './Pilot'
 

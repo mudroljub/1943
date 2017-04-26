@@ -1,5 +1,5 @@
 /* global THREE */
-import Colors from '../konfig/colors.js'
+import Colors from '../config/colors.js'
 
 const Pilot = function() {
   this.mesh = new THREE.Object3D()
