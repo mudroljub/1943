@@ -1,13 +1,10 @@
 /* global THREE */
 
-import Scene from './actors/Scene'
+import Scene from './scene/Scene'
 import Sea from './actors/Sea'
 import Sky from './actors/Sky'
-import handleWindowResize from './helpers/handleWindowResize'
-import normalize from './helpers/normalize'
 
 let avion
-const mousePos = {x: 0, y: 0}
 
 /* INIT */
 
@@ -35,25 +32,9 @@ loader.options.convertUpAxis = true
 
 /* FUNCTIONS */
 
-const handleMouseMove = event => {
-	// normalized value between -1 and 1
-  mousePos.x = -1 + (event.clientX / window.innerWidth) * 2
-  mousePos.y = 1 - (event.clientY / window.innerHeight) * 2
-}
-
-const updatePlane = mousePos => {
-  const targetX = normalize(mousePos.x, -.75, .75, -100, 100)
-  const targetY = normalize(mousePos.y, -.75, .75, 25, 175)
-  // avion.position.x += (targetX - avion.position.x) * 0.05
-  // avion.position.y += (targetY - avion.position.y) * 0.1
-  // avion.rotation.x = (avion.position.y - targetY) * 0.0064
-  avion.rotation.z = (targetY - avion.position.y) * 0.0128
-}
-
 const update = () => {
   sea.moveWaves()
   sky.mesh.rotation.z += .01
-  updatePlane(mousePos)
   camera.lookAt(avion.position)
   renderer.render(scene, camera)
   requestAnimationFrame(update)
@@ -68,8 +49,3 @@ loader.load('/assets/me-109/model.dae', collada => {
   scene.add(avion)
   update()
 })
-
-/* EVENTS */
-
-window.addEventListener('resize', () => handleWindowResize(renderer, camera))
-document.addEventListener('mousemove', handleMouseMove)
