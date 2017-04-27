@@ -36,7 +36,6 @@ loader.options.convertUpAxis = true
 /* FUNCTIONS */
 
 const handleMouseMove = event => {
-	// normalized value between -1 and 1
   mousePos.x = -1 + (event.clientX / window.innerWidth) * 2
   mousePos.y = 1 - (event.clientY / window.innerHeight) * 2
 }
@@ -44,12 +43,10 @@ const handleMouseMove = event => {
 const updatePlane = mousePos => {
   const targetX = normalize(mousePos.x, -.75, .75, -100, 100)
   const targetY = normalize(mousePos.y, -.75, .75, 25, 175)
-
   avion.position.x += (targetX - avion.position.x) * 0.005
   avion.position.y += (targetY - avion.position.y) * 0.01
-
-  avion.rotation.x = (avion.position.y - targetY) * 0.0064
-  avion.rotation.z = (targetY - avion.position.y) * 0.0128
+  avion.rotation.x = (avion.position.y - targetY) * 0.006
+  avion.rotation.z = (targetY - avion.position.y) * 0.003
 }
 
 const update = () => {

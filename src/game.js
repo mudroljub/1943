@@ -44,10 +44,8 @@ const handleMouseMove = event => {
 const updatePlane = mousePos => {
   const targetX = normalize(mousePos.x, -.75, .75, -100, 100)
   const targetY = normalize(mousePos.y, -.75, .75, 25, 175)
-
   // avion.position.x += (targetX - avion.position.x) * 0.05
   // avion.position.y += (targetY - avion.position.y) * 0.1
-
   // avion.rotation.x = (avion.position.y - targetY) * 0.0064
   avion.rotation.z = (targetY - avion.position.y) * 0.0128
 }
