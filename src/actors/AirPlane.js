@@ -68,33 +68,30 @@ const propeller = new THREE.Mesh(geomPropeller, matPropeller)
 propeller.add(blade)
 propeller.position.x = 50
 
-
-export default class AirPlane {
+export default class AirPlane extends THREE.Object3D {
   constructor() {
-    this.mesh = new THREE.Object3D()
+    super()
     ;[cockpit, engine, tailPlane, sideWing, propeller].map(m => {
       m.castShadow = m.receiveShadow = true
-      this.mesh.add(m)
+      this.add(m)
     })
-    this.mesh.castShadow = this.mesh.receiveShadow = true
-    this.mesh.scale.set(.25, .25, .25)
-    this.mesh.position.y = 100
+    this.castShadow = this.receiveShadow = true
+    this.scale.set(.25, .25, .25)
+    this.position.y = 100
     this.propeller = propeller
     this.pilot = pilot
-    this.mesh.add(pilot.mesh)
+    this.add(pilot.mesh)
   }
 
   update(mousePos) {
     const targetY = normalize(mousePos.y, -.75, .75, 25, 175)
     const targetX = normalize(mousePos.x, -.75, .75, -100, 100)
-
     // Move the plane at each frame by adding a fraction of the remaining distance
-    this.mesh.position.y += (targetY - this.mesh.position.y) * 0.1
-    this.mesh.position.x += (targetX - this.mesh.position.x) * 0.05
-
+    this.position.y += (targetY - this.position.y) * 0.1
+    this.position.x += (targetX - this.position.x) * 0.05
     // Rotate the plane proportionally to the remaining distance
-    this.mesh.rotation.z = (targetY - this.mesh.position.y) * 0.0128
-    this.mesh.rotation.x = (this.mesh.position.y - targetY) * 0.0064
+    this.rotation.z = (targetY - this.position.y) * 0.0128
+    this.rotation.x = (this.position.y - targetY) * 0.0064
     this.propeller.rotation.x += 0.3
     this.pilot.updateHairs()
   }
