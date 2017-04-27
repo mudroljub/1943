@@ -9,7 +9,7 @@ export default class ClassName extends THREE.Scene {
     this.add(
       new THREE.HemisphereLight(0xaaaaaa, 0x000000, .9),
       new DirectionalLight(0xffffff, .9),
-      new THREE.AmbientLight(0xdc8874, .5)
+      // new THREE.AmbientLight(0xdc8874, .5)
     )
   }
 }
