@@ -1,8 +1,8 @@
-[![](screen.png)](https://mudroljub.github.io/aviator/)
+[![](screen.png)](https://mudroljub.github.io/1943/)
 
 # 1943: Death Over Balkans
 
-Try demo here: [mudroljub.github.io/aviator](https://mudroljub.github.io/aviator/)
+Try demo here: [mudroljub.github.io/aviator](https://mudroljub.github.io/1943/)
 
 ## Technologies
 
