@@ -305,7 +305,7 @@ const init = collada => {
 
 /* EVENTS */
 
-__WEBPACK_IMPORTED_MODULE_3__scene_loader__["a" /* default */].load('../assets/me-109/model.dae', init)
+__WEBPACK_IMPORTED_MODULE_3__scene_loader__["a" /* default */].load('assets/me-109/model.dae', init)
 document.addEventListener('mousemove', handleMouseMove)
 
 
