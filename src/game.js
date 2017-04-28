@@ -1,35 +1,13 @@
-/* global THREE */
-
-import Scene from './actors/Scene'
-import Sea from './actors/Sea'
-import Sky from './actors/Sky'
+import scene from './scene/scene'
+import camera from './scene/camera'
+import renderer from './scene/renderer'
+import loader from './scene/loader'
+import controls from './scene/controls'
+import ground from './actors/ground'
+import Avion from './actors/Avion'
 
 let avion
 const mousePos = {x: 0, y: 0}
-
-/* INIT */
-
-const scene = new Scene()
-const camera = new THREE.PerspectiveCamera(
-  60, window.innerWidth / window.innerHeight, 1, 10000
-)
-camera.position.set(-15, 100, 20) // z 0 stavlja kameru iza
-
-const renderer = new THREE.WebGLRenderer({
-  alpha: true,
-  antialias: true
-})
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.shadowMap.enabled = true // baca senku
-document.getElementById('world').appendChild(renderer.domElement)
-
-const sea = new Sea()
-const sky = new Sky()
-
-scene.add(sea.mesh, sky.mesh)
-
-const loader = new THREE.ColladaLoader()
-loader.options.convertUpAxis = true
 
 /* FUNCTIONS */
 
@@ -39,23 +17,22 @@ const handleMouseMove = event => {
 }
 
 const update = () => {
-  sea.moveWaves()
-  sky.mesh.rotation.z += .01
+  requestAnimationFrame(update)
+  controls.update()
+  ground.rotate()
+  // airplane.update(mousePos)
+  avion.normalizePlane()
   camera.lookAt(avion.position)
   renderer.render(scene, camera)
-  requestAnimationFrame(update)
 }
 
-/* EXEC */
-
-loader.load('/assets/me-109/model.dae', collada => {
-  avion = collada.scene
-  avion.position.y = 100
-  // avion.rotation.y = -Math.PI / 2
-  scene.add(avion)
+const init = collada => {
+  avion = new Avion(collada.scene)
+  scene.add(avion, ground)
   update()
-})
+}
 
 /* EVENTS */
 
+loader.load('/assets/me-109/model.dae', init)
 document.addEventListener('mousemove', handleMouseMove)
