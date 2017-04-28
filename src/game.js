@@ -34,5 +34,5 @@ const init = collada => {
 
 /* EVENTS */
 
-loader.load('../assets/me-109/model.dae', init)
+loader.load('assets/me-109/model.dae', init)
 document.addEventListener('mousemove', handleMouseMove)
