@@ -9,6 +9,7 @@
   },
   "keywords": [],
   "author": "Damjan Pavlica <mudroljub@gmail.com>",
+  "repository": "git@github.com:mudroljub/1943.git",
   "license": "ISC",
   "devDependencies": {
     "webpack": "^2.4.1",

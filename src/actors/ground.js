@@ -1,7 +1,15 @@
 /* global THREE */
 
-const geometry = new THREE.CylinderGeometry(3000, 3000, 4000, 200, 50)
-geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2))
+const waves = []
+const radius = 3000
+
+const geometry = new THREE.CylinderGeometry(
+  radius, radius, 4000, 200, 50)
+geometry.applyMatrix(
+  new THREE.Matrix4()
+  .makeRotationX(Math.PI / 2)
+  .makeRotationZ(Math.PI * 0.5)
+)
 geometry.mergeVertices()
 
 const material = new THREE.MeshPhongMaterial({
@@ -13,9 +21,8 @@ const material = new THREE.MeshPhongMaterial({
 
 const ground = new THREE.Mesh(geometry, material)
 ground.receiveShadow = true
-ground.position.y = -3000
+ground.position.y = -radius
 
-const waves = []
 geometry.vertices.map(vertex => {
   waves.push({
     y: vertex.y,
@@ -30,12 +37,12 @@ geometry.vertices.map(vertex => {
 ground.rotate = function() {
   geometry.vertices.map((vertex, i) => {
     const wave = waves[i]
-    vertex.x = wave.x + Math.cos(wave.ang) * wave.amp
+    vertex.z = wave.z + Math.cos(wave.ang) * wave.amp
     vertex.y = wave.y + Math.sin(wave.ang) * wave.amp
     wave.ang += wave.speed
   })
   geometry.verticesNeedUpdate = true
-  ground.rotation.z += .005
+  ground.rotation.x -= .005
 }
 
 export default ground

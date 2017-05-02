@@ -20,7 +20,6 @@ const update = () => {
   requestAnimationFrame(update)
   controls.update()
   ground.rotate()
-  // airplane.update(mousePos)
   avion.normalizePlane()
   camera.lookAt(avion.position)
   renderer.render(scene, camera)
