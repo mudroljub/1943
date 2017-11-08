@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -76,7 +76,7 @@
 const camera = new THREE.PerspectiveCamera(
   60, window.innerWidth / window.innerHeight, 1, 1000
 )
-camera.position.set(-142, 102, 41) // z: 0 stavlja kameru iza
+camera.position.set(-68, 143, -90) // z: 0 stavlja kameru iza
 
 /* harmony default export */ __webpack_exports__["a"] = (camera);
 
@@ -106,8 +106,9 @@ document.getElementById('world').appendChild(renderer.domElement)
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = Avion;
 let keyPressed = false
+
 const rotationAngle = 0.02
-const maxRotation = Math.PI / 3
+const maxRoll = Math.PI / 3
 const displacement = 5
 const minHeight = 50
 
@@ -117,37 +118,35 @@ function Avion(model) {
   avion.traverse(child => child.castShadow = true)
   avion.scale.set(.25, .25, .25)
   avion.position.y = 100
-  avion.rotation.y = Math.PI / 2
 
   avion.normalizePlane = () => {
     if (keyPressed) return
-    const aberration = Math.abs(avion.rotation.z)
-    if (avion.rotation.z > 0) avion.rotation.z -= aberration * 0.25
-    if (avion.rotation.z < 0) avion.rotation.z += aberration * 0.25
+    const pitch = Math.abs(avion.rotation.z)
+    const roll = Math.abs(avion.rotation.y)
+    if (avion.rotation.z > 0) avion.rotation.z -= pitch * 0.25
+    if (avion.rotation.z < 0) avion.rotation.z += pitch * 0.25
+    if (avion.rotation.y > 0) avion.rotation.y -= roll * 0.25
+    if (avion.rotation.y < 0) avion.rotation.y += roll * 0.25
   }
 
   document.onkeydown = e => {
-    console.log(avion.position.y)
     keyPressed = true
     switch (e.keyCode) {
-    case 65:
-      avion.position.z -= displacement
-      if(avion.rotation.z > -maxRotation)
-        avion.rotation.z -= rotationAngle
+    case 65:  // a
+      avion.position.x += displacement
+      if(avion.rotation.y < maxRoll)
+        avion.rotation.y += rotationAngle
       break
-    case 68:
-      avion.position.z += displacement
-      if (avion.rotation.z < maxRotation)
-        avion.rotation.z += rotationAngle
+    case 68:  // d
+      avion.position.x -= displacement
+      if (avion.rotation.y > -maxRoll)
+        avion.rotation.y -= rotationAngle
       break
-    case 87:
-      if (avion.position.y > minHeight)
-        avion.position.y -= displacement * 0.5
-      // avion.rotation.y += rotationAngle
+    case 87:  // w
+      if (avion.position.y > minHeight) avion.position.y -= displacement * 0.5
       break
-    case 83:
+    case 83:  // s
       avion.position.y += displacement * 0.5
-      // avion.rotation.y -= rotationAngle
       break
     }
   }
@@ -165,22 +164,29 @@ function Avion(model) {
 "use strict";
 /* global THREE */
 
-const geometry = new THREE.CylinderGeometry(3000, 3000, 4000, 200, 50)
-geometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI / 2))
+const waves = []
+const radius = 3000
+
+const geometry = new THREE.CylinderGeometry(
+  radius, radius, 4000, 200, 50)
+geometry.applyMatrix(
+  new THREE.Matrix4()
+  .makeRotationX(Math.PI / 2)
+  .makeRotationZ(Math.PI * 0.5)
+)
 geometry.mergeVertices()
 
 const material = new THREE.MeshPhongMaterial({
   color: 0x91A566,
   transparent: true,
   opacity: .8,
-  shading: THREE.FlatShading,
+  flatShading: true,
 })
 
 const ground = new THREE.Mesh(geometry, material)
 ground.receiveShadow = true
-ground.position.y = -3000
+ground.position.y = -radius
 
-const waves = []
 geometry.vertices.map(vertex => {
   waves.push({
     y: vertex.y,
@@ -195,12 +201,12 @@ geometry.vertices.map(vertex => {
 ground.rotate = function() {
   geometry.vertices.map((vertex, i) => {
     const wave = waves[i]
-    vertex.x = wave.x + Math.cos(wave.ang) * wave.amp
+    vertex.z = wave.z + Math.cos(wave.ang) * wave.amp
     vertex.y = wave.y + Math.sin(wave.ang) * wave.amp
     wave.ang += wave.speed
   })
   geometry.verticesNeedUpdate = true
-  ground.rotation.z += .005
+  ground.rotation.x -= .005
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (ground);
@@ -227,20 +233,7 @@ const controls = new THREE.OrbitControls(__WEBPACK_IMPORTED_MODULE_1__camera_js_
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* global THREE */
-
-const loader = new THREE.ColladaLoader()
-loader.options.convertUpAxis = true
-
-/* harmony default export */ __webpack_exports__["a"] = (loader);
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DirectionalLight__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DirectionalLight__ = __webpack_require__(7);
 /* global THREE */
 
 
@@ -257,18 +250,18 @@ scene.add(
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scene_scene__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__scene_scene__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__scene_camera__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scene_renderer__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__scene_loader__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__scene_controls__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actors_ground__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__actors_Avion__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__scene_controls__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actors_ground__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actors_Avion__ = __webpack_require__(2);
+/* global THREE */
 
 
 
@@ -276,41 +269,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-let avion
 const mousePos = {x: 0, y: 0}
+let avion
 
 /* FUNCTIONS */
 
-const handleMouseMove = event => {
-  mousePos.x = -1 + (event.clientX / window.innerWidth) * 2
-  mousePos.y = 1 - (event.clientY / window.innerHeight) * 2
+const updateMousePos = e => {
+  mousePos.x = -1 + (e.clientX / window.innerWidth) * 2
+  mousePos.y = 1 - (e.clientY / window.innerHeight) * 2
 }
 
 const update = () => {
   requestAnimationFrame(update)
-  __WEBPACK_IMPORTED_MODULE_4__scene_controls__["a" /* default */].update()
-  __WEBPACK_IMPORTED_MODULE_5__actors_ground__["a" /* default */].rotate()
-  // airplane.update(mousePos)
+  __WEBPACK_IMPORTED_MODULE_3__scene_controls__["a" /* default */].update()
+  __WEBPACK_IMPORTED_MODULE_4__actors_ground__["a" /* default */].rotate()
   avion.normalizePlane()
   __WEBPACK_IMPORTED_MODULE_1__scene_camera__["a" /* default */].lookAt(avion.position)
   __WEBPACK_IMPORTED_MODULE_2__scene_renderer__["a" /* default */].render(__WEBPACK_IMPORTED_MODULE_0__scene_scene__["a" /* default */], __WEBPACK_IMPORTED_MODULE_1__scene_camera__["a" /* default */])
 }
 
 const init = collada => {
-  avion = new __WEBPACK_IMPORTED_MODULE_6__actors_Avion__["a" /* default */](collada.scene)
-  __WEBPACK_IMPORTED_MODULE_0__scene_scene__["a" /* default */].add(avion, __WEBPACK_IMPORTED_MODULE_5__actors_ground__["a" /* default */])
+  avion = new __WEBPACK_IMPORTED_MODULE_5__actors_Avion__["a" /* default */](collada.scene)
+  __WEBPACK_IMPORTED_MODULE_0__scene_scene__["a" /* default */].add(avion, __WEBPACK_IMPORTED_MODULE_4__actors_ground__["a" /* default */])
   update()
 }
 
 /* EVENTS */
 
-__WEBPACK_IMPORTED_MODULE_3__scene_loader__["a" /* default */].load('assets/me-109/model.dae', init)
-document.addEventListener('mousemove', handleMouseMove)
+new THREE.ColladaLoader().load('assets/me-109/model.dae', init)
+document.addEventListener('mousemove', updateMousePos)
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
