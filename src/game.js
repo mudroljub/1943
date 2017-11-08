@@ -1,13 +1,13 @@
+/* global THREE */
 import scene from './scene/scene'
 import camera from './scene/camera'
 import renderer from './scene/renderer'
-import loader from './scene/loader'
 import controls from './scene/controls'
 import ground from './actors/ground'
 import Avion from './actors/Avion'
 
-let avion
 const mousePos = {x: 0, y: 0}
+let avion
 
 /* FUNCTIONS */
 
@@ -33,5 +33,5 @@ const init = collada => {
 
 /* EVENTS */
 
-loader.load('assets/me-109/model.dae', init)
+new THREE.ColladaLoader().load('assets/me-109/model.dae', init)
 document.addEventListener('mousemove', updateMousePos)
