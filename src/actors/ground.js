@@ -16,7 +16,7 @@ const material = new THREE.MeshPhongMaterial({
   color: 0x91A566,
   transparent: true,
   opacity: .8,
-  shading: THREE.FlatShading,
+  flatShading: true,
 })
 
 const ground = new THREE.Mesh(geometry, material)

@@ -11,9 +11,9 @@ const mousePos = {x: 0, y: 0}
 
 /* FUNCTIONS */
 
-const handleMouseMove = event => {
-  mousePos.x = -1 + (event.clientX / window.innerWidth) * 2
-  mousePos.y = 1 - (event.clientY / window.innerHeight) * 2
+const updateMousePos = e => {
+  mousePos.x = -1 + (e.clientX / window.innerWidth) * 2
+  mousePos.y = 1 - (e.clientY / window.innerHeight) * 2
 }
 
 const update = () => {
@@ -34,4 +34,4 @@ const init = collada => {
 /* EVENTS */
 
 loader.load('assets/me-109/model.dae', init)
-document.addEventListener('mousemove', handleMouseMove)
+document.addEventListener('mousemove', updateMousePos)
