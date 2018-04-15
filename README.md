@@ -2,7 +2,7 @@
 
 # 1943: Death Over Balkans
 
-Try demo here: [mudroljub.github.io/aviator](https://mudroljub.github.io/1943/)
+Try demo here: [mudroljub.github.io/1943](https://mudroljub.github.io/1943/)
 
 ## Technologies
 
